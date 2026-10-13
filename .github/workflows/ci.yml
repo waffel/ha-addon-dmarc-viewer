@@ -46,6 +46,20 @@ jobs:
       - name: Run the bats tests
         run: docker run --rm -v "$PWD":/repo:ro dmarc-addon-tests --print-output-on-failure /repo/tests
 
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: gitleaks (secrets in files and in the whole history)
+        run: docker run --rm -v "$PWD":/repo:ro zricethezav/gitleaks:v8.21.2 detect --source /repo --no-banner
+      - name: trivy (secrets and misconfigurations)
+        run: >-
+          docker run --rm -v "$PWD":/repo:ro aquasec/trivy:0.58.0 fs
+          --scanners secret,misconfig --severity LOW,MEDIUM,HIGH,CRITICAL
+          --ignorefile /repo/.trivyignore --exit-code 1 /repo
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -55,6 +69,11 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: dmarc-viewer
-          push: false
+          load: true
+          tags: dmarc-addon
           cache-from: type=gha,scope=addon
           cache-to: type=gha,scope=addon,mode=max
+      - name: Vulnerability report for the image (informational)
+        run: >-
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.58.0 image
+          --ignore-unfixed --severity HIGH,CRITICAL --exit-code 0 dmarc-addon

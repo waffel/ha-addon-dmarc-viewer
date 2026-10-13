@@ -21,4 +21,6 @@ export IMAP_HOST IMAP_USER IMAP_PASSWORD IMAP_FOLDER IMAP_CHECK_INTERVAL HTTP_SE
 
 # The publisher needs no mailbox credentials.
 env -u IMAP_PASSWORD -u IMAP_USER "${PUSH_STATES:-/push-states.sh}" &
-exec dmarc-report-viewer
+# The viewer parses mail attachments from strangers: run it unprivileged and without the Supervisor token,
+# which only the publisher needs.
+exec env -u SUPERVISOR_TOKEN -u HASSIO_TOKEN su-exec nobody dmarc-report-viewer
