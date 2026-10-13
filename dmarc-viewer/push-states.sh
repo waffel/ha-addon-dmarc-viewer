@@ -36,7 +36,7 @@ while true; do
         flagged="$(echo "$reports" | jq -r '[.[] | select(.flagged)] | length')"
         if publish sensor.dmarc_reports_total "$total" "DMARC reports total" mdi:email-multiple &&
             publish sensor.dmarc_spf_passed "$spf" "DMARC SPF passed" mdi:shield-check &&
-            publish sensor.dmarc_dkim_passed "$dkim" "DMARC DKIM passed" mdi:key-check &&
+            publish sensor.dmarc_dkim_passed "$dkim" "DMARC DKIM passed" mdi:key-variant &&
             publish sensor.dmarc_reports_flagged "$flagged" "DMARC reports flagged" mdi:shield-alert; then
             wait_seconds="$PUSH_INTERVAL"
         else

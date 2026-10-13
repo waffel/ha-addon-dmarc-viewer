@@ -27,6 +27,8 @@ set as `COMMIT` in [`dmarc-viewer/Dockerfile`](dmarc-viewer/Dockerfile)), so you
 
 ## Sensors, dashboard and alert
 
+![DMARC card in Home Assistant](docs/screenshot.png)
+
 The add-on creates the sensors itself (`sensor.dmarc_reports_total`, `sensor.dmarc_spf_passed`,
 `sensor.dmarc_dkim_passed`, `sensor.dmarc_reports_flagged`). See [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md).
 
