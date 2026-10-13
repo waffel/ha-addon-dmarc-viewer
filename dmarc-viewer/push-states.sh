@@ -33,26 +33,25 @@ viewer_get() {
     fi
 }
 
-# Entity names and units follow the add-on option "language" (en or de).
+# Entity names follow the add-on option "language" (en or de).
+# All sensors share the unit "#" on purpose: Home Assistant draws one history chart per unit, so a common unit
+# keeps the sensors together in one chart. The names say what is counted.
+UNIT="#"
 if [ "${DMARC_LANGUAGE:-en}" = "de" ]; then
     NAME_TOTAL="DMARC-Berichte erhalten"
     NAME_SPF="DMARC-Mails mit SPF bestanden"
     NAME_DKIM="DMARC-Mails mit DKIM bestanden"
     NAME_FLAGGED="DMARC-Berichte auffällig"
-    UNIT_REPORTS="Berichte"
-    UNIT_MAILS="Mails"
 else
     NAME_TOTAL="DMARC reports received"
     NAME_SPF="DMARC mails passing SPF"
     NAME_DKIM="DMARC mails passing DKIM"
     NAME_FLAGGED="DMARC reports flagged"
-    UNIT_REPORTS="reports"
-    UNIT_MAILS="mails"
 fi
 
 # publish <entity_id> <state> <friendly_name> <icon> <unit>
-# No state_class on purpose: the unit follows the language option, and a changing unit under a
-# state_class would trip Home Assistant's long-term statistics.
+# No state_class on purpose: the sensors are plain counters that are not meant for long-term statistics;
+# the history graph works from the recorded states.
 publish() {
     jq -n --arg state "$2" --arg name "$3" --arg icon "$4" --arg unit "$5" \
         '{state: $state, attributes: {friendly_name: $name, icon: $icon, unit_of_measurement: $unit}}' >"$BODY_FILE"
@@ -73,10 +72,10 @@ while true; do
         flagged="$(printf '%s' "$reports" | jq -r '[.[] | select(.flagged)] | length')"
         if ! { is_count "$total" && is_count "$spf" && is_count "$dkim" && is_count "$flagged"; }; then
             echo "Unexpected response from the viewer (total='$total' spf='$spf' dkim='$dkim' flagged='$flagged'), not publishing." >&2
-        elif publish sensor.dmarc_reports_total "$total" "$NAME_TOTAL" mdi:email-multiple "$UNIT_REPORTS" &&
-            publish sensor.dmarc_spf_passed "$spf" "$NAME_SPF" mdi:shield-check "$UNIT_MAILS" &&
-            publish sensor.dmarc_dkim_passed "$dkim" "$NAME_DKIM" mdi:key-variant "$UNIT_MAILS" &&
-            publish sensor.dmarc_reports_flagged "$flagged" "$NAME_FLAGGED" mdi:shield-alert "$UNIT_REPORTS"; then
+        elif publish sensor.dmarc_reports_total "$total" "$NAME_TOTAL" mdi:email-multiple "$UNIT" &&
+            publish sensor.dmarc_spf_passed "$spf" "$NAME_SPF" mdi:shield-check "$UNIT" &&
+            publish sensor.dmarc_dkim_passed "$dkim" "$NAME_DKIM" mdi:key-variant "$UNIT" &&
+            publish sensor.dmarc_reports_flagged "$flagged" "$NAME_FLAGGED" mdi:shield-alert "$UNIT"; then
             wait_seconds="$PUSH_INTERVAL"
         else
             echo "Publishing sensors to Home Assistant failed, retrying." >&2

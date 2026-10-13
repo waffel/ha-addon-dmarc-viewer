@@ -15,23 +15,46 @@ jobs:
       - uses: actions/checkout@v4
       - name: yamllint
         run: docker run --rm -v "$PWD":/data cytopia/yamllint:1 -c .yamllint.yaml .
-      - name: shellcheck
+      - name: shellcheck (scripts)
         run: >-
           docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0
-          dmarc-viewer/run.sh dmarc-viewer/push-states.sh tests/run-tests.sh scripts/changelog-section.sh
+          dmarc-viewer/run.sh dmarc-viewer/push-states.sh scripts/changelog-section.sh tests/run.sh
+      - name: shellcheck (bats tests)
+        run: >-
+          docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bats
+          tests/push-states.bats tests/run.bats tests/changelog-section.bats tests/consistency.bats
+      - name: shellcheck (test helpers)
+        run: docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bash -e SC2034 tests/helpers.bash
       - name: hadolint
-        run: docker run --rm -i hadolint/hadolint:v2.12.0 < dmarc-viewer/Dockerfile
+        run: |
+          docker run --rm -i hadolint/hadolint:v2.12.0 < dmarc-viewer/Dockerfile
+          docker run --rm -i hadolint/hadolint:v2.12.0 < tests/Dockerfile
 
   test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Unit tests
-        run: docker run --rm -v "$PWD":/repo:ro alpine:3.21 sh /repo/tests/run-tests.sh
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the test runner image (cached)
+        uses: docker/build-push-action@v6
+        with:
+          context: tests
+          load: true
+          tags: dmarc-addon-tests
+          cache-from: type=gha,scope=tests
+          cache-to: type=gha,scope=tests,mode=max
+      - name: Run the bats tests
+        run: docker run --rm -v "$PWD":/repo:ro dmarc-addon-tests --print-output-on-failure /repo/tests
 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build the add-on image from the pinned upstream commit
-        run: docker build dmarc-viewer
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the add-on image from the pinned upstream commit (cached)
+        uses: docker/build-push-action@v6
+        with:
+          context: dmarc-viewer
+          push: false
+          cache-from: type=gha,scope=addon
+          cache-to: type=gha,scope=addon,mode=max
