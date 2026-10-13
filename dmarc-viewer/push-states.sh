@@ -28,7 +28,8 @@ publish() {
 }
 
 while true; do
-    if summary="$(viewer_get /summary)" && reports="$(viewer_get /dmarc-reports)"; then
+    # last_update is null until the viewer has finished its first IMAP check; publishing before would report zeros.
+    if summary="$(viewer_get /summary)" && echo "$summary" | jq -e ".last_update != null" >/dev/null && reports="$(viewer_get /dmarc-reports)"; then
         total="$(echo "$summary" | jq -r '.dmarc.reports // 0')"
         spf="$(echo "$summary" | jq -r '.dmarc.spf_policy_results.pass // 0')"
         dkim="$(echo "$summary" | jq -r '.dmarc.dkim_policy_results.pass // 0')"

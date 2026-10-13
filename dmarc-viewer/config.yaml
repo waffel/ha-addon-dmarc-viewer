@@ -1,5 +1,5 @@
 name: DMARC Report Viewer
-version: "5e53bf8-1"
+version: "5e53bf8-2"
 slug: dmarc_viewer
 description: Reads DMARC reports from an IMAP folder and publishes them as Home Assistant sensors (wraps cry-inc/dmarc-report-viewer)
 url: https://github.com/waffel/ha-addon-dmarc-viewer
