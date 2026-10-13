@@ -2,12 +2,14 @@
 # The first build compiles ~250 crates and takes a while on a Raspberry Pi; later starts are instant.
 FROM rust:1-alpine AS builder
 # Package versions are not pinned: Alpine drops old package versions, which would break rebuilds.
+# The builder stage text is kept unchanged so the device's Docker layer cache (the slow Rust compile) stays valid.
 # hadolint ignore=DL3018
 RUN apk add --no-cache musl-dev make cmake g++ git
 ARG COMMIT=5e53bf879dac6c5b9cb93d3f89484cca8ecb38dd
-RUN git clone https://github.com/cry-inc/dmarc-report-viewer.git /src
+# hadolint ignore=DL3003
+RUN git clone https://github.com/cry-inc/dmarc-report-viewer.git /src \
+ && cd /src && git checkout "$COMMIT"
 WORKDIR /src
-RUN git checkout "$COMMIT"
 ENV CARGO_TARGET_DIR=/target
 RUN cargo build --release --locked && strip /target/release/dmarc-report-viewer
 
