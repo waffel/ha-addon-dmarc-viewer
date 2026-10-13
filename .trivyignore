@@ -1,0 +1,12 @@
+# Findings that were reviewed and accepted. Each entry says why.
+
+# DS002 (image user is root): the container starts as root only to read the add-on options and to start the
+# publisher. run.sh drops to "nobody" for the viewer, which is the process that parses untrusted mail attachments.
+# The test image only runs tests against a read-only copy of the repository.
+AVD-DS-0002
+
+# DS013 (RUN cd): the checkout step keeps "cd" so the Docker layer cache of the slow Rust build stays valid.
+AVD-DS-0013
+
+# DS026 (no HEALTHCHECK): the Supervisor watchdog in config.yaml checks the viewer's /health route instead.
+AVD-DS-0026

@@ -14,8 +14,9 @@ ENV CARGO_TARGET_DIR=/target
 RUN cargo build --release --locked && strip /target/release/dmarc-report-viewer
 
 FROM alpine:3.21
+# Pull in security fixes that are newer than the base image.
 # hadolint ignore=DL3018
-RUN apk add --no-cache jq curl
+RUN apk upgrade --no-cache && apk add --no-cache jq curl su-exec
 COPY --from=builder /target/release/dmarc-report-viewer /usr/local/bin/dmarc-report-viewer
 COPY run.sh push-states.sh /
 RUN chmod +x /run.sh /push-states.sh

@@ -18,3 +18,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Tests for the add-on scripts, the documentation and the release notes extractor, run in CI together with lint and an image build.
 - Release workflow: pushing a `vX.Y.Z` tag on `main` creates a GitHub release from this changelog.
 - Dependabot for GitHub Actions and the Dockerfile base images.
+- The viewer runs as `nobody` without the Supervisor token, and the Supervisor watchdog watches its `/health` route.
+- CI security job (gitleaks, trivy) and an informational vulnerability report for the built image.
+- The image installs pending Alpine security updates when it is built.
