@@ -40,3 +40,11 @@ keys() { # section file
     run cmp "$REPO/CHANGELOG.md" "$REPO/dmarc-viewer/CHANGELOG.md"
     assert_success
 }
+
+@test "the supervisor watchdog checks the viewer's health route" {
+    assert_file_contains "$CONFIG" '^watchdog: "http://\[HOST\]:\[PORT:8080\]/health"$'
+}
+
+@test "the image installs su-exec for dropping privileges" {
+    assert_file_contains "$REPO/dmarc-viewer/Dockerfile" 'apk add.*su-exec'
+}
