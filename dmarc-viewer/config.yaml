@@ -10,6 +10,7 @@ startup: services
 boot: auto
 init: false
 homeassistant_api: true
+watchdog: "http://[HOST]:[PORT:8080]/health"
 ports:
   8080/tcp: null
 ports_description:

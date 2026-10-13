@@ -22,6 +22,8 @@ docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bats tests/*.bats
 docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bash -e SC2034 tests/helpers.bash
 docker run --rm -i hadolint/hadolint:v2.12.0 < dmarc-viewer/Dockerfile
 docker run --rm -i hadolint/hadolint:v2.12.0 < tests/Dockerfile
+docker run --rm -v "$PWD":/repo:ro zricethezav/gitleaks:v8.21.2 detect --source /repo --no-banner
+docker run --rm -v "$PWD":/repo:ro aquasec/trivy:0.58.0 fs --scanners secret,misconfig --severity LOW,MEDIUM,HIGH,CRITICAL --ignorefile /repo/.trivyignore --exit-code 1 /repo
 sh tests/run.sh
 ```
 
