@@ -4,7 +4,7 @@
 # "dmarc_viewer" it is normally "local-dmarc-viewer".
 rest:
   - resource: http://local-dmarc-viewer:8080/summary
-    scan_interval: 1800
+    scan_interval: 3600
     sensor:
       - name: "DMARC reports total"
         unique_id: dmarc_reports_total
@@ -19,7 +19,7 @@ rest:
         value_template: "{{ value_json.dmarc.dkim_policy_results.get('pass', 0) }}"
         state_class: measurement
   - resource: http://local-dmarc-viewer:8080/dmarc-reports
-    scan_interval: 1800
+    scan_interval: 3600
     sensor:
       - name: "DMARC reports flagged"
         unique_id: dmarc_reports_flagged

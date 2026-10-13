@@ -14,8 +14,10 @@ options:
   imap_user: ""
   imap_password: ""
   imap_folder: DMARC-Reports
+  check_interval_hours: 24
 schema:
   imap_host: str
   imap_user: str
   imap_password: password
   imap_folder: str
+  check_interval_hours: int(1,168)
