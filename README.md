@@ -23,17 +23,19 @@ set as `COMMIT` in [`dmarc-viewer/Dockerfile`](dmarc-viewer/Dockerfile)), so you
 2. Install "DMARC Report Viewer". The first build compiles Rust and takes a while on a Raspberry Pi.
 3. Prepare the mailbox: create a folder (default `DMARC-Reports`) and a mail filter that moves incoming DMARC
    report mails into it, for example subject contains `Report domain`.
-4. Fill in the add-on configuration (see [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md)) and start it.
+4. Fill in the add-on configuration (see [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md)) and start it. The sensors appear in Home Assistant a few minutes later.
 
-## Sensors, alert and dashboard
+## Sensors, dashboard and alert
 
-The add-on provides the data; the sensors, the alert and the dashboard are plain Home Assistant configuration that
-you add once. Copy the examples and adjust the add-on hostname (shown on the add-on's info page):
+The add-on creates the sensors itself (`sensor.dmarc_reports_total`, `sensor.dmarc_spf_passed`,
+`sensor.dmarc_dkim_passed`, `sensor.dmarc_reports_flagged`). See [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md).
 
 | File | Purpose | Home Assistant docs |
 |---|---|---|
-| [`examples/dmarc.yaml`](examples/dmarc.yaml) | REST sensors and an alert automation, saved as `/config/packages/dmarc.yaml` | [REST sensor](https://www.home-assistant.io/integrations/rest/), [packages](https://www.home-assistant.io/docs/configuration/packages/), [automations](https://www.home-assistant.io/docs/automation/) |
-| [`examples/dmarc-dashboard.yaml`](examples/dmarc-dashboard.yaml) | Dashboard view with current values and a 30 day history | [dashboards](https://www.home-assistant.io/dashboards/) |
+| [`examples/dashboard-card.yaml`](examples/dashboard-card.yaml) | Card with current values and a 30 day history. Dashboard -> Edit -> Add card -> Manual | [dashboards](https://www.home-assistant.io/dashboards/) |
+| [`blueprints/automation/dmarc_flagged_alert.yaml`](blueprints/automation/dmarc_flagged_alert.yaml) | Alert when the number of flagged reports increases | [blueprints](https://www.home-assistant.io/docs/automation/using_blueprints/) |
+
+[![Import the blueprint](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fwaffel%2Fha-addon-dmarc-viewer%2Fblob%2Fmain%2Fblueprints%2Fautomation%2Fdmarc_flagged_alert.yaml)
 
 ## Contributing and security
 

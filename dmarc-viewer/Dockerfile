@@ -15,8 +15,8 @@ RUN cargo build --release --locked && strip /target/release/dmarc-report-viewer
 
 FROM alpine:3.21
 # hadolint ignore=DL3018
-RUN apk add --no-cache jq
+RUN apk add --no-cache jq curl
 COPY --from=builder /target/release/dmarc-report-viewer /usr/local/bin/dmarc-report-viewer
-COPY run.sh /run.sh
-RUN chmod +x /run.sh
+COPY run.sh push-states.sh /
+RUN chmod +x /run.sh /push-states.sh
 CMD ["/run.sh"]

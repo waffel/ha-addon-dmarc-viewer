@@ -1,23 +1,31 @@
 name: DMARC Report Viewer
-version: "5e53bf8"
+version: "5e53bf8-1"
 slug: dmarc_viewer
-description: Reads DMARC aggregate reports from a mailbox folder over IMAP (cry-inc/dmarc-report-viewer, built from a pinned source commit)
-url: https://github.com/cry-inc/dmarc-report-viewer
+description: Reads DMARC reports from an IMAP folder and publishes them as Home Assistant sensors (wraps cry-inc/dmarc-report-viewer)
+url: https://github.com/waffel/ha-addon-dmarc-viewer
 arch:
   - aarch64
   - amd64
 startup: services
 boot: auto
 init: false
+homeassistant_api: true
+ports:
+  8080/tcp: null
+ports_description:
+  8080/tcp: Web UI of the viewer (set a web UI password before enabling this port)
+webui: "http://[HOST]:[PORT:8080]"
 options:
   imap_host: ""
   imap_user: ""
   imap_password: ""
   imap_folder: DMARC-Reports
   check_interval_hours: 24
+  web_ui_password: ""
 schema:
   imap_host: str
   imap_user: str
   imap_password: password
   imap_folder: str
   check_interval_hours: int(1,168)
+  web_ui_password: password?

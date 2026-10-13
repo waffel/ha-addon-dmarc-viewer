@@ -14,3 +14,6 @@ configuration:
   check_interval_hours:
     name: Check interval (hours)
     description: How often the folder is checked for new reports.
+  web_ui_password:
+    name: Web UI password
+    description: Optional. Protects the viewer web page (user "dmarc") once you enable its port in the Network tab. Keep empty while the port is off.
