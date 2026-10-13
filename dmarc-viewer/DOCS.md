@@ -19,6 +19,7 @@ results as Home Assistant sensors.
 | `imap_folder` | `DMARC-Reports` | Folder with the report mails. A sub-folder of the inbox is usually written `INBOX/Name` or `INBOX.Name`, depending on the server. |
 | `check_interval_hours` | `24` | How often the folder is checked for new mails (1 to 168). |
 | `web_ui_password` | (empty) | Optional password for the viewer's web page, user name `dmarc`. |
+| `language` | `en` | Language of the sensor names in Home Assistant: `en` or `de`. |
 
 ## Sensors
 
@@ -26,16 +27,16 @@ The add-on creates these sensors in Home Assistant and refreshes them every 10 m
 
 | Sensor | Meaning |
 |---|---|
-| `sensor.dmarc_reports_total` | Number of parsed reports |
-| `sensor.dmarc_spf_passed` | Evaluations where SPF passed |
-| `sensor.dmarc_dkim_passed` | Evaluations where DKIM passed |
+| `sensor.dmarc_reports_total` | Number of parsed reports (one report file per sender and day) |
+| `sensor.dmarc_spf_passed` | Number of mails for which SPF passed (summed over all reports) |
+| `sensor.dmarc_dkim_passed` | Number of mails for which DKIM passed (summed over all reports) |
 | `sensor.dmarc_reports_flagged` | Reports in which SPF, DKIM or DMARC failed |
 
 After a Home Assistant restart the sensors are missing until the add-on's next refresh (at most 10 minutes).
 
 ## Dashboard card
 
-Copy this into Dashboard -> Edit -> Add card -> Manual:
+Copy this into Dashboard -> Edit -> Add card -> Manual (a [German version](https://github.com/waffel/ha-addon-dmarc-viewer/blob/main/examples/dashboard-card.de.yaml) is in the repository):
 
 ```yaml
 type: vertical-stack
@@ -43,24 +44,17 @@ cards:
   - type: entities
     title: DMARC reports
     entities:
-      - entity: sensor.dmarc_reports_total
-        name: Reports total
-      - entity: sensor.dmarc_spf_passed
-        name: SPF passed
-      - entity: sensor.dmarc_dkim_passed
-        name: DKIM passed
-      - entity: sensor.dmarc_reports_flagged
-        name: Flagged reports
+      - sensor.dmarc_reports_total
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged
   - type: history-graph
     title: History, last 30 days
     hours_to_show: 720
     entities:
-      - entity: sensor.dmarc_spf_passed
-        name: SPF passed
-      - entity: sensor.dmarc_dkim_passed
-        name: DKIM passed
-      - entity: sensor.dmarc_reports_flagged
-        name: Flagged reports
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged
 ```
 
 For an alert, import the [blueprint](https://github.com/waffel/ha-addon-dmarc-viewer/blob/main/blueprints/automation/dmarc_flagged_alert.yaml).

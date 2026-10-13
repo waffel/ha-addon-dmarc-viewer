@@ -17,3 +17,6 @@ configuration:
   web_ui_password:
     name: Web UI password
     description: Optional. Protects the viewer web page (user "dmarc") once you enable its port in the Network tab. Keep empty while the port is off.
+  language:
+    name: Language
+    description: Language of the sensor names in Home Assistant (en or de).

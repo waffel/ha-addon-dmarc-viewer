@@ -1,0 +1,18 @@
+# Deutsche Karte. Einfügen unter: Dashboard -> Bearbeiten -> Karte hinzufügen -> Manuell.
+# Die Namen der Entitäten kommen vom Add-on (Option "language"), deshalb stehen sie hier nicht.
+type: vertical-stack
+cards:
+  - type: entities
+    title: DMARC-Berichte
+    entities:
+      - sensor.dmarc_reports_total
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged
+  - type: history-graph
+    title: Verlauf, letzte 30 Tage
+    hours_to_show: 720
+    entities:
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged

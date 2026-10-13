@@ -19,10 +19,28 @@ viewer_get() {
     fi
 }
 
-# publish <entity_id> <state> <friendly_name> <icon>
+
+# Entity names and units follow the add-on option "language" (en or de).
+if [ "${DMARC_LANGUAGE:-en}" = "de" ]; then
+    NAME_TOTAL="DMARC-Berichte erhalten"
+    NAME_SPF="DMARC-Mails mit SPF bestanden"
+    NAME_DKIM="DMARC-Mails mit DKIM bestanden"
+    NAME_FLAGGED="DMARC-Berichte auffällig"
+    UNIT_REPORTS="Berichte"
+    UNIT_MAILS="Mails"
+else
+    NAME_TOTAL="DMARC reports received"
+    NAME_SPF="DMARC mails passing SPF"
+    NAME_DKIM="DMARC mails passing DKIM"
+    NAME_FLAGGED="DMARC reports flagged"
+    UNIT_REPORTS="reports"
+    UNIT_MAILS="mails"
+fi
+
+# publish <entity_id> <state> <friendly_name> <icon> <unit>
 publish() {
-    jq -n --arg state "$2" --arg name "$3" --arg icon "$4" \
-        '{state: $state, attributes: {friendly_name: $name, icon: $icon, unit_of_measurement: "reports", state_class: "measurement"}}' |
+    jq -n --arg state "$2" --arg name "$3" --arg icon "$4" --arg unit "$5" \
+        '{state: $state, attributes: {friendly_name: $name, icon: $icon, unit_of_measurement: $unit, state_class: "measurement"}}' |
         curl -fsS -X POST -H "Authorization: Bearer ${SUPERVISOR_TOKEN:?SUPERVISOR_TOKEN is not set}" \
             -H "Content-Type: application/json" -d @- "$HA_API/states/$1" >/dev/null
 }
@@ -34,10 +52,10 @@ while true; do
         spf="$(echo "$summary" | jq -r '.dmarc.spf_policy_results.pass // 0')"
         dkim="$(echo "$summary" | jq -r '.dmarc.dkim_policy_results.pass // 0')"
         flagged="$(echo "$reports" | jq -r '[.[] | select(.flagged)] | length')"
-        if publish sensor.dmarc_reports_total "$total" "DMARC reports total" mdi:email-multiple &&
-            publish sensor.dmarc_spf_passed "$spf" "DMARC SPF passed" mdi:shield-check &&
-            publish sensor.dmarc_dkim_passed "$dkim" "DMARC DKIM passed" mdi:key-variant &&
-            publish sensor.dmarc_reports_flagged "$flagged" "DMARC reports flagged" mdi:shield-alert; then
+        if publish sensor.dmarc_reports_total "$total" "$NAME_TOTAL" mdi:email-multiple "$UNIT_REPORTS" &&
+            publish sensor.dmarc_spf_passed "$spf" "$NAME_SPF" mdi:shield-check "$UNIT_MAILS" &&
+            publish sensor.dmarc_dkim_passed "$dkim" "$NAME_DKIM" mdi:key-variant "$UNIT_MAILS" &&
+            publish sensor.dmarc_reports_flagged "$flagged" "$NAME_FLAGGED" mdi:shield-alert "$UNIT_REPORTS"; then
             wait_seconds="$PUSH_INTERVAL"
         else
             echo "Publishing sensors to Home Assistant failed, retrying." >&2

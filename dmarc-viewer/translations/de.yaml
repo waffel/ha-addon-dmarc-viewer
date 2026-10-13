@@ -1,0 +1,24 @@
+configuration:
+  imap_host:
+    name: IMAP-Server
+    description: Host-Name des IMAP-Servers des Postfachs, das die DMARC-Berichte empfängt (TLS, Port 993).
+  imap_user:
+    name: IMAP-Benutzer
+    description: Anmeldename des Postfachs.
+  imap_password:
+    name: IMAP-Passwort
+    description: Passwort des Postfachs.
+  imap_folder:
+    name: IMAP-Ordner
+    description: Ordner, der die DMARC-Berichte enthält.
+  check_interval_hours:
+    name: Prüfintervall (Stunden)
+    description: Wie oft der Ordner nach neuen Berichten durchsucht wird.
+  web_ui_password:
+    name: Passwort der Weboberfläche
+    description: Optional. Schützt die Webseite des Viewers (Benutzer "dmarc"), wenn der Port aktiviert ist. Sonst leer lassen.
+  language:
+    name: Sprache
+    description: Sprache der Sensor-Namen in Home Assistant (en oder de).
+network:
+  8080/tcp: Weboberfläche des Viewers (vorher ein Passwort setzen)

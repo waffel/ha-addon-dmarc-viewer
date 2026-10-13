@@ -11,7 +11,8 @@ IMAP_FOLDER="$(jq -r .imap_folder "$OPT")"
 IMAP_CHECK_INTERVAL="$(( $(jq -r .check_interval_hours "$OPT") * 3600 ))"
 # An empty password switches the web UI's basic auth off. That is fine while the port stays unpublished.
 HTTP_SERVER_PASSWORD="$(jq -r '.web_ui_password // ""' "$OPT")"
-export IMAP_HOST IMAP_USER IMAP_PASSWORD IMAP_FOLDER IMAP_CHECK_INTERVAL HTTP_SERVER_PASSWORD
+DMARC_LANGUAGE="$(jq -r '.language // "en"' "$OPT")"
+export IMAP_HOST IMAP_USER IMAP_PASSWORD IMAP_FOLDER IMAP_CHECK_INTERVAL HTTP_SERVER_PASSWORD DMARC_LANGUAGE
 
 : "${IMAP_HOST:?Option imap_host is empty. Set it in the add-on configuration.}"
 : "${IMAP_USER:?Option imap_user is empty. Set it in the add-on configuration.}"

@@ -1,25 +1,18 @@
-# Paste into: Dashboard -> Edit -> Add card -> Manual.
-# The sensors are created by the add-on, no further configuration is needed.
+# English card. Paste into: Dashboard -> Edit -> Add card -> Manual.
+# Entity names come from the add-on (option "language"), so they are not repeated here.
 type: vertical-stack
 cards:
   - type: entities
     title: DMARC reports
     entities:
-      - entity: sensor.dmarc_reports_total
-        name: Reports total
-      - entity: sensor.dmarc_spf_passed
-        name: SPF passed
-      - entity: sensor.dmarc_dkim_passed
-        name: DKIM passed
-      - entity: sensor.dmarc_reports_flagged
-        name: Flagged reports
+      - sensor.dmarc_reports_total
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged
   - type: history-graph
     title: History, last 30 days
     hours_to_show: 720
     entities:
-      - entity: sensor.dmarc_spf_passed
-        name: SPF passed
-      - entity: sensor.dmarc_dkim_passed
-        name: DKIM passed
-      - entity: sensor.dmarc_reports_flagged
-        name: Flagged reports
+      - sensor.dmarc_spf_passed
+      - sensor.dmarc_dkim_passed
+      - sensor.dmarc_reports_flagged
