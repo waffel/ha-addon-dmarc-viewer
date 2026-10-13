@@ -1,6 +1,6 @@
 # DMARC Report Viewer add-on for Home Assistant
 
-[![Lint](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/lint.yml/badge.svg)](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/lint.yml)
+[![CI](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/ci.yml/badge.svg)](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Home Assistant add-on that wraps [cry-inc/dmarc-report-viewer](https://github.com/cry-inc/dmarc-report-viewer).
