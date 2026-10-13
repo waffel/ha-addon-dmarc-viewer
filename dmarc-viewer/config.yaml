@@ -1,0 +1,21 @@
+name: DMARC Report Viewer
+version: "5e53bf8"
+slug: dmarc_viewer
+description: Reads DMARC aggregate reports from a mailbox folder over IMAP (cry-inc/dmarc-report-viewer, built from a pinned source commit)
+url: https://github.com/cry-inc/dmarc-report-viewer
+arch:
+  - aarch64
+  - amd64
+startup: services
+boot: auto
+init: false
+options:
+  imap_host: imap.mailbox.org
+  imap_user: ""
+  imap_password: ""
+  imap_folder: DMARC-Reports
+schema:
+  imap_host: str
+  imap_user: str
+  imap_password: password
+  imap_folder: str

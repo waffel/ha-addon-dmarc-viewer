@@ -1,0 +1,27 @@
+# Dashboard view for the DMARC sensors. In Home Assistant: Dashboard -> Edit -> Raw configuration editor,
+# and paste this as an entry under `views:`.
+title: DMARC
+path: dmarc
+icon: mdi:email-check
+cards:
+  - type: entities
+    title: Mail-Authentifizierung (aktuell)
+    entities:
+      - entity: sensor.dmarc_reports_total
+        name: Berichte gesamt
+      - entity: sensor.dmarc_spf_passed
+        name: SPF bestanden
+      - entity: sensor.dmarc_dkim_passed
+        name: DKIM bestanden
+      - entity: sensor.dmarc_reports_flagged
+        name: Auffällige Berichte
+  - type: history-graph
+    title: Verlauf der letzten 30 Tage
+    hours_to_show: 720
+    entities:
+      - entity: sensor.dmarc_spf_passed
+        name: SPF bestanden
+      - entity: sensor.dmarc_dkim_passed
+        name: DKIM bestanden
+      - entity: sensor.dmarc_reports_flagged
+        name: Auffällige Berichte
