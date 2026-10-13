@@ -5,23 +5,23 @@ path: dmarc
 icon: mdi:email-check
 cards:
   - type: entities
-    title: Mail-Authentifizierung (aktuell)
+    title: Mail authentication (current)
     entities:
       - entity: sensor.dmarc_reports_total
-        name: Berichte gesamt
+        name: Reports total
       - entity: sensor.dmarc_spf_passed
-        name: SPF bestanden
+        name: SPF passed
       - entity: sensor.dmarc_dkim_passed
-        name: DKIM bestanden
+        name: DKIM passed
       - entity: sensor.dmarc_reports_flagged
-        name: Auffällige Berichte
+        name: Flagged reports
   - type: history-graph
-    title: Verlauf der letzten 30 Tage
+    title: History, last 30 days
     hours_to_show: 720
     entities:
       - entity: sensor.dmarc_spf_passed
-        name: SPF bestanden
+        name: SPF passed
       - entity: sensor.dmarc_dkim_passed
-        name: DKIM bestanden
+        name: DKIM passed
       - entity: sensor.dmarc_reports_flagged
-        name: Auffällige Berichte
+        name: Flagged reports

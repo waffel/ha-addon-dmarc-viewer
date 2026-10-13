@@ -1,5 +1,8 @@
 # DMARC Report Viewer add-on for Home Assistant
 
+[![Lint](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/lint.yml/badge.svg)](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/lint.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Home Assistant add-on that wraps [cry-inc/dmarc-report-viewer](https://github.com/cry-inc/dmarc-report-viewer).
 It reads DMARC aggregate reports (XML, zip or gz attachments) from a folder of an IMAP mailbox and serves
 a summary and a web UI. Everything stays on your network: no third-party report service is involved.
@@ -26,6 +29,10 @@ the URLs in `examples/dmarc.yaml` if needed.
 - `examples/dmarc.yaml`: REST sensors (reports, SPF passed, DKIM passed, flagged reports) and an automation that
   notifies you when the number of flagged reports increases. Place it at `/config/packages/dmarc.yaml`.
 - `examples/dmarc-dashboard.yaml`: dashboard view with current values and a 30 day history.
+
+## Contributing and security
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Changes are listed in [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 

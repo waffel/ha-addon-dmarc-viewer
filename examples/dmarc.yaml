@@ -41,11 +41,11 @@ automation:
     action:
       - service: persistent_notification.create
         data:
-          title: "DMARC-Problem"
+          title: "DMARC problem"
           message: >
-            Ein DMARC-Bericht ist auffällig (SPF oder DKIM fehlgeschlagen).
-            Auffällige Berichte insgesamt: {{ states('sensor.dmarc_reports_flagged') }}.
+            A DMARC report is flagged (SPF or DKIM failed).
+            Flagged reports in total: {{ states('sensor.dmarc_reports_flagged') }}.
       - service: notify.notify
         data:
-          title: "DMARC-Problem"
-          message: "Auffälliger DMARC-Bericht für deine Domains. Details im Dashboard."
+          title: "DMARC problem"
+          message: "A DMARC report failed SPF or DKIM for one of your domains. See the dashboard for details."

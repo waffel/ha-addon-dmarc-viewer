@@ -1,0 +1,16 @@
+configuration:
+  imap_host:
+    name: IMAP host
+    description: IMAP server of the mailbox that receives the DMARC reports (TLS, port 993).
+  imap_user:
+    name: IMAP user
+    description: Login name of the mailbox.
+  imap_password:
+    name: IMAP password
+    description: Password of the mailbox.
+  imap_folder:
+    name: IMAP folder
+    description: Folder that contains the DMARC report mails.
+  check_interval_hours:
+    name: Check interval (hours)
+    description: How often the folder is checked for new reports.
