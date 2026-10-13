@@ -11,9 +11,9 @@ Reads DMARC aggregate reports from a folder of an IMAP mailbox and serves a summ
 
 | Option | Default | Description |
 |---|---|---|
-| `imap_host` | `imap.mailbox.org` | IMAP server (TLS, port 993). |
-| `imap_user` | | IMAP login name. |
-| `imap_password` | | IMAP password. |
+| `imap_host` | (empty, required) | Host name of your IMAP server (TLS, port 993). |
+| `imap_user` | (empty, required) | IMAP login name. |
+| `imap_password` | (empty, required) | IMAP password. |
 | `imap_folder` | `DMARC-Reports` | Folder that contains the report mails. |
 | `check_interval_hours` | `24` | How often the folder is checked for new mails (1 to 168). |
 
@@ -23,4 +23,4 @@ The web UI listens on port 8080 inside Home Assistant's add-on network and is re
 Home Assistant core under the add-on hostname shown on the add-on info page. No port is published to the host.
 Useful endpoints: `/summary`, `/dmarc-reports`, `/metrics`, `/health`.
 
-See `examples/` in the repository for REST sensors, an alert automation and a dashboard view.
+See the [examples](https://github.com/waffel/ha-addon-dmarc-viewer/tree/main/examples) for REST sensors, an alert automation and a dashboard view, and the [repository README](https://github.com/waffel/ha-addon-dmarc-viewer#readme) for the setup steps.

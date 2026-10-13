@@ -1,7 +1,7 @@
 configuration:
   imap_host:
     name: IMAP host
-    description: IMAP server of the mailbox that receives the DMARC reports (TLS, port 993).
+    description: Host name of the IMAP server of the mailbox that receives the DMARC reports (TLS, port 993).
   imap_user:
     name: IMAP user
     description: Login name of the mailbox.

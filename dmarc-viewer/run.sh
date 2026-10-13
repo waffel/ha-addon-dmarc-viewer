@@ -13,4 +13,8 @@ IMAP_CHECK_INTERVAL="$(( $(jq -r .check_interval_hours "$OPT") * 3600 ))"
 export IMAP_HOST IMAP_USER IMAP_PASSWORD IMAP_FOLDER IMAP_CHECK_INTERVAL
 export HTTP_SERVER_PASSWORD=""
 
+: "${IMAP_HOST:?Option imap_host is empty. Set it in the add-on configuration.}"
+: "${IMAP_USER:?Option imap_user is empty. Set it in the add-on configuration.}"
+: "${IMAP_PASSWORD:?Option imap_password is empty. Set it in the add-on configuration.}"
+
 exec dmarc-report-viewer
