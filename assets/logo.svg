@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="500" height="200" viewBox="0 0 500 200">
-  <g transform="translate(36,36) scale(1.0)">
-    <rect width="128" height="128" rx="24" fill="#1e5aa8"/>
-    <rect x="18" y="34" width="92" height="62" rx="8" fill="#ffffff"/>
-    <path d="M22 40 L64 72 L106 40" fill="none" stroke="#1e5aa8" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
-    <circle cx="94" cy="88" r="24" fill="#2ea043" stroke="#1e5aa8" stroke-width="5"/>
-    <path d="M83 88 L91 96 L106 79" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-  <text x="190" y="96" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#1e5aa8">DMARC</text>
-  <text x="190" y="144" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#586069">Report Viewer</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="200" viewBox="0 0 500 200"><g transform="translate(36,36)">
+<g>
+  <path d="M64 6 L114 24 V60 C114 92 93 114 64 124 C35 114 14 92 14 60 V24 Z" fill="#1e5aa8"/>
+  <path d="M64 14 L106 29 V60 C106 87 89 106 64 116 C39 106 22 87 22 60 V29 Z" fill="#2b6fc4"/>
+  <rect x="34" y="42" width="60" height="42" rx="6" fill="#ffffff"/>
+  <path d="M37 47 L64 68 L91 47" fill="none" stroke="#1e5aa8" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="90" cy="88" r="21" fill="#2ea043" stroke="#ffffff" stroke-width="5"/>
+  <path d="M80 88 L87 95 L100 80" fill="none" stroke="#ffffff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g><text x="190" y="96" font-family="Helvetica, Arial, sans-serif" font-size="46" font-weight="700" fill="#1e5aa8">DMARC</text><text x="190" y="144" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#586069">Report Viewer</text></svg>
