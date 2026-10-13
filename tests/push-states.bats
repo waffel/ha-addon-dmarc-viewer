@@ -40,11 +40,11 @@ teardown() { stop_mock; }
     assert_equal "$(posted sensor.dmarc_reports_flagged .body.attributes.friendly_name)" "DMARC-Berichte auffällig"
 }
 
-@test "all sensors share one unit so Home Assistant draws them in one history chart" {
+@test "all sensors share one blank unit so Home Assistant draws them in one history chart" {
     start_mock "$READY" "$NO_FLAGS"
     run_push
-    run jq -s -r '[.[].body.attributes.unit_of_measurement] | unique | join(",")' "$BATS_TEST_TMPDIR/posts.jsonl"
-    assert_output "#"
+    run jq -s -e '[.[].body.attributes.unit_of_measurement] | unique == [" "]' "$BATS_TEST_TMPDIR/posts.jsonl"
+    assert_success
 }
 
 @test "sets no state_class" {

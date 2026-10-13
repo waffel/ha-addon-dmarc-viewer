@@ -34,9 +34,9 @@ viewer_get() {
 }
 
 # Entity names follow the add-on option "language" (en or de).
-# All sensors share the unit "#" on purpose: Home Assistant draws one history chart per unit, so a common unit
-# keeps the sensors together in one chart. The names say what is counted.
-UNIT="#"
+# All sensors share one blank unit on purpose: Home Assistant draws one history chart per unit, so a common unit
+# keeps the sensors together in one chart, and a blank one shows no symbol. The names say what is counted.
+UNIT=" "
 if [ "${DMARC_LANGUAGE:-en}" = "de" ]; then
     NAME_TOTAL="DMARC-Berichte erhalten"
     NAME_SPF="DMARC-Mails mit SPF bestanden"
