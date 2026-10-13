@@ -23,7 +23,8 @@ results as Home Assistant sensors.
 
 ## Sensors
 
-The add-on creates these sensors in Home Assistant and refreshes them every 10 minutes:
+The add-on creates these sensors in Home Assistant and refreshes them every 10 minutes. They all use the unit `#`,
+so that Home Assistant draws them together in one history chart. The sensor names tell what is counted:
 
 | Sensor | Meaning |
 |---|---|

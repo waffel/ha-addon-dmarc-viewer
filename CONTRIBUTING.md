@@ -17,15 +17,18 @@ All checks run in Docker, nothing is installed locally:
 
 ```sh
 docker run --rm -v "$PWD":/data cytopia/yamllint:1 -c .yamllint.yaml .
-docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 dmarc-viewer/run.sh dmarc-viewer/push-states.sh tests/run-tests.sh scripts/changelog-section.sh
+docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 dmarc-viewer/run.sh dmarc-viewer/push-states.sh scripts/changelog-section.sh tests/run.sh
+docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bats tests/*.bats
+docker run --rm -v "$PWD":/mnt koalaman/shellcheck:v0.10.0 -s bash -e SC2034 tests/helpers.bash
 docker run --rm -i hadolint/hadolint:v2.12.0 < dmarc-viewer/Dockerfile
-docker run --rm -v "$PWD":/repo:ro alpine:3.21 sh /repo/tests/run-tests.sh
+docker run --rm -i hadolint/hadolint:v2.12.0 < tests/Dockerfile
+sh tests/run.sh
 ```
 
 ## Updating the upstream viewer
 
 Review the upstream diff first. Then change `COMMIT` in `dmarc-viewer/Dockerfile`, refresh the JSON fixtures in
-`tests/run-tests.sh` against the new upstream code and add a changelog entry. The add-on version only changes at a release.
+`tests/helpers.bash` against the new upstream code and add a changelog entry. The add-on version only changes at a release.
 
 ## Releasing
 
