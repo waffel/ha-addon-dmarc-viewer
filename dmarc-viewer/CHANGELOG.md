@@ -21,3 +21,5 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - The viewer runs as `nobody` without the Supervisor token, and the Supervisor watchdog watches its `/health` route.
 - CI security job (gitleaks, trivy) and an informational vulnerability report for the built image.
 - The image installs pending Alpine security updates when it is built.
+- Git flow branching model, recorded in ADR-0001: `develop` is the default branch, changes come in from `feature/` and
+  `bugfix/` branches, and releases go through `release/X.Y.Z` into `main`.
