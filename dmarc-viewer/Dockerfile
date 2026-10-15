@@ -13,7 +13,7 @@ WORKDIR /src
 ENV CARGO_TARGET_DIR=/target
 RUN cargo build --release --locked && strip /target/release/dmarc-report-viewer
 
-FROM alpine:3.21
+FROM alpine:3.24
 # Pull in security fixes that are newer than the base image.
 # hadolint ignore=DL3018
 RUN apk upgrade --no-cache && apk add --no-cache jq curl su-exec
