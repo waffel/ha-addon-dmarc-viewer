@@ -3,6 +3,15 @@
 [![CI](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/ci.yml/badge.svg)](https://github.com/waffel/ha-addon-dmarc-viewer/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+Do you own a domain and get strange mails from Google, Microsoft, Yahoo or other providers, each with an XML, zip
+or gz attachment and a subject like `Report domain: example.com`? Those are DMARC reports. They tell you who sends
+mail in the name of your domain and whether that mail passes SPF and DKIM, but nobody wants to read the XML by hand.
+If you run Home Assistant OS or a Supervised installation (add-ons need the Supervisor), this add-on is for you:
+install it, point it at the mailbox folder once, and from then on the reports turn into sensors, a dashboard and an
+alert without any further work.
+
+![DMARC card in Home Assistant](docs/screenshot.png)
+
 Home Assistant add-on that wraps [cry-inc/dmarc-report-viewer](https://github.com/cry-inc/dmarc-report-viewer).
 It reads [DMARC](https://dmarc.org/overview/) aggregate reports (XML, zip or gz attachments, see
 [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489)) from a folder of an IMAP mailbox and provides a summary
@@ -26,8 +35,6 @@ set as `COMMIT` in [`dmarc-viewer/Dockerfile`](dmarc-viewer/Dockerfile)), so you
 4. Fill in the add-on configuration (see [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md)) and start it. The sensors appear in Home Assistant a few minutes later.
 
 ## Sensors, dashboard and alert
-
-![DMARC card in Home Assistant](docs/screenshot.png)
 
 The add-on creates the sensors itself (`sensor.dmarc_reports_total`, `sensor.dmarc_spf_passed`,
 `sensor.dmarc_dkim_passed`, `sensor.dmarc_reports_flagged`). See [`dmarc-viewer/DOCS.md`](dmarc-viewer/DOCS.md).
